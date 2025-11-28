@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.venu.llm.circuit.service.GeminiService;
+import com.venu.llm.circuit.service.LlmService;
+import com.venu.llm.circuit.service.ServiceRetrieverFactory;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ import reactor.core.publisher.Flux;
 @AllArgsConstructor
 public class ChatController {
 
-	private GeminiService geminiService;
+	private ServiceRetrieverFactory serviceFactory;
 
 	@PostMapping("/generate-chat")
 	public ResponseEntity<Map<String, String>> generateText(@RequestBody Map<String, String> body) {
@@ -29,7 +30,10 @@ public class ChatController {
 		log.info("At ChatController GeminService calling Prompt: {}", body);
 
 		String prompt = body.get("prompt");
-		String result = geminiService.sendTextQuery(prompt);
+
+		LlmService implemetedModel = serviceFactory.getRetriver("GEMINI");
+
+		String result = implemetedModel.sendTextQuery(prompt);
 
 		log.info("At ChatController {} the llm response: ", result);
 
@@ -37,16 +41,12 @@ public class ChatController {
 
 	}
 
-	
-	
-	@PostMapping(
-			value = "/generate-chat-stream", 
-			produces = MediaType.TEXT_EVENT_STREAM_VALUE
-			)
+	@PostMapping(value = "/generate-chat-stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<String> generateTextStream(@RequestBody Map<String, String> body) {
 		String prompt = body.get("prompt");
+		LlmService implemetedModel = serviceFactory.getRetriver("GEMINI");
 
-		return geminiService.streamTextQuery(prompt);
+		return implemetedModel.streamTextQuery(prompt);
 	}
 
 }

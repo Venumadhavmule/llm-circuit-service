@@ -1,21 +1,23 @@
-package com.venu.llm.circuit.service;
+package com.venu.llm.circuit.service.impl
+;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
 import com.google.genai.ResponseStream;
 import com.google.genai.types.GenerateContentResponse;
+import com.venu.llm.circuit.service.LlmService;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 
 @Service
 @Slf4j
-public class GeminiService {
+public class GeminiServiceImpl implements LlmService {
 
 	private ChatClient chatClient;
 
-	public GeminiService(ChatClient chatClient) {
+	public GeminiServiceImpl(ChatClient chatClient) {
 		this.chatClient = chatClient;
 	}
 
