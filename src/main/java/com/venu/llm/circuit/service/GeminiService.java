@@ -3,7 +3,11 @@ package com.venu.llm.circuit.service;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
+import com.google.genai.ResponseStream;
+import com.google.genai.types.GenerateContentResponse;
+
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Flux;
 
 @Service
 @Slf4j
@@ -22,6 +26,12 @@ public class GeminiService {
 
 		log.info("Returning the response: {}", result);
 		return result;
+	}
+
+	public Flux<String> streamTextQuery(String prompt) {
+		log.info("Starting streaming call for prompt: {}", prompt);
+
+		return chatClient.prompt().user(prompt).stream().content();
 	}
 
 }
