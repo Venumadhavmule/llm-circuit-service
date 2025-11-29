@@ -1,4 +1,4 @@
-package com.venu.llm.circuit.config.dto;
+package com.venu.llm.circuit.dto;
 
 import java.time.Instant;
 import java.util.Map;

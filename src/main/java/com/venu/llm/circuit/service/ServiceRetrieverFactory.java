@@ -9,12 +9,12 @@ import com.venu.llm.circuit.service.impl.OpenAiServiceImplementation;
 public class ServiceRetrieverFactory {
 
 	private final GeminiServiceImpl geminiService;
-	private final OpenAiServiceImplementation openAiServiceImplementation;
+	private final OpenAiServiceImplementation openAiService;
 
 	public ServiceRetrieverFactory(GeminiServiceImpl geminiServiceImpl,
 			OpenAiServiceImplementation openAiServiceImplementation) {
 		this.geminiService = geminiServiceImpl;
-		this.openAiServiceImplementation = openAiServiceImplementation;
+		this.openAiService = openAiServiceImplementation;
 	}
 
 	public LlmService getRetriver(String llm) {
@@ -24,7 +24,7 @@ public class ServiceRetrieverFactory {
 			return geminiService;
 
 		case "OPENAI":
-			throw new IllegalArgumentException("Not Builded Yet,,: {}" + llm);
+			return openAiService;
 
 		default:
 			throw new IllegalArgumentException("Not supported Llm model: {}" + llm);

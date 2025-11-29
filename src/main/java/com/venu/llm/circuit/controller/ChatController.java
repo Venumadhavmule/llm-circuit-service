@@ -31,7 +31,7 @@ public class ChatController {
 
 		String prompt = body.get("prompt");
 
-		LlmService implemetedModel = serviceFactory.getRetriver("GEMINI");
+		LlmService implemetedModel = serviceFactory.getRetriver("OPENAI");
 
 		String result = implemetedModel.sendTextQuery(prompt);
 
@@ -44,7 +44,7 @@ public class ChatController {
 	@PostMapping(value = "/generate-chat-stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<String> generateTextStream(@RequestBody Map<String, String> body) {
 		String prompt = body.get("prompt");
-		LlmService implemetedModel = serviceFactory.getRetriver("GEMINI");
+		LlmService implemetedModel = serviceFactory.getRetriver("OPENAI");
 
 		return implemetedModel.streamTextQuery(prompt);
 	}
