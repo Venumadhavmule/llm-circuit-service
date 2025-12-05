@@ -19,7 +19,7 @@ public class ServiceRetrieverFactory {
 
 	public LlmService getRetriver(String llm) {
 
-		switch (llm) {
+		switch (llm.toUpperCase()) {
 		case "GEMINI":
 			return geminiService;
 
